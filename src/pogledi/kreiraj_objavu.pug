@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  form(action="/objava/kreiraj", method="POST") 
+    .mb-3
+      label.form-label(for='naslov') Naslov
+        div Potrebno je [#{minKarakteraNaslov} - #{maxKarakteraNaslov}] karaktera
+      input#naslov.form-control(type='text' placeholder='Naslov objave' name='naslov')
+    .mb-3
+      label.form-label(for='sadrzaj') Vasa prica
+        div Potrebno je najmanje #{minKarakteraSadrzaj} karaktera
+      textarea#sadrzaj.form-control(name='sadrzaj' rows='3' placeholder="Bio je dug dan i na putu kuci sa posla sam sreo...")
+    button.btn.btn-primary(type='submit') Objavi pricu

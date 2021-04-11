@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  div.card
+    div.list-group.list-group-flush
+      div.list-group-item
+        h1 Naslov: 
+          span= objava.naslov
+        if objava.objavio === korisnickoIme
+          form(action="/obrisi/objavu" method="POST")
+            input(type="hidden", name="objavaId" value=objava._id) 
+            input.btn.btn-danger(type="submit", value="Obrisi")
+      div.list-group-item
+        p.card-body= objava.sadrzaj
+      div.list-group-item
+        p Objavljeno: #{objava.datum + ' u ' + objava.vreme}
+        p Pricu objavio: 
+          a.card-link(href='/korisnik/'+objava.objavio) #{objava.objavio}
+      div.list-group-item
+        div.list-group.list-group-flush
+          h4.card-title Komentari
+          if korisnickoIme
+            div.list-group-item
+              form(action="/komentar", method="POST")
+                input(type="hidden", name="postId" value=objava._id)
+                .mb-3
+                  label.form-label(for='sadrzaj') Ostavite komentar.
+                    div Potrebno je najmanje #{minKarakteraKomentar} karaktera
+                  textarea#sadrzaj.form-control(name='sadrzaj' rows='3' placeholder="Svidja mi se ova objava jer je informativna...")
+                button.btn.btn-primary(type='submit') Komentarisi
+          else
+            div.list-group-item
+              a(href="/login") Ulogujte se 
+              span da bi ste ostavili komentar.
+
+          each komentar in objava.komentari
+            div.list-group-item
+              div
+                a.card-link(href="/korisnik/" + komentar.napisaoKorisnik) #{komentar.napisaoKorisnik} 
+                span je komentarisao:
+              div= komentar.sadrzaj
+              div Komentar je napisan: 
+                span= komentar.trenutniDatum + ' u ' + komentar.trenutnoVreme
+              if komentar.napisaoKorisnik === korisnickoIme
+                form(action="/obrisi/komentar" method="POST")
+                  input(type="hidden", name="objavaId" value=objava._id)
+                  input(type="hidden", name="komentarId" value=komentar.id)
+                  input.btn.btn-danger.btn-sm(type="submit", value="Obrisi komentar") 
+          else
+            div.list-group-item Trenutno nema objavljenih komentara.

@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  if korisnickoIme
+    div.card
+      div.card-body
+        h1.card-title Dobro dosli, 
+          a.btn.btn-outline-primary(href="/korisnik/"+korisnickoIme) #{korisnickoIme}
+        p.card-text Pocnite da delite svoje price.
+        div
+          a.card-link.btn.btn-outline-primary(href="/korisnik/" + korisnickoIme) Moj profil 
+          a.card-link.btn.btn-primary(href="/objava/kreiraj") Nova prica
+  else
+    div.card
+      div.card-body
+
+        h1.card-title Blogger
+        p.card-text Mesto da delite price sa vasom publikom.
+        a.card-link.btn.btn-primary(href="/login") Ulogujte se
+        a.card-link.btn.btn-primary(href="/register") Registrujte se

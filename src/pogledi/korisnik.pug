@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  div.card
+    if korisnik.korisnickoIme === korisnickoIme
+      div.card-body
+        h1 Moj profil, 
+          a.btn.btn-outline-primary(href='/korisnik/'+title)= title
+      div.list-group.list-group-flush
+        div.list-group-item
+          a(class='btn btn-primary' href="/objava/kreiraj") Objavi pricu
+          div(style="float: right;display: block;")
+            form(action="/obrisi/korisnika" method="POST")
+              input(type="hidden", name="korisnickoIme" value=korisnickoIme)
+              input.btn.btn-danger(type="submit", value="Obrisi nalog")
+        
+        div.list-group-item
+          div.list-group.list-group-flush
+            div.list-group-item
+              h2 Moje objave:
+            div.list-group-item
+              ul.list-group.list-group-flush
+                each objava in korisnik.objave
+                  li.list-group-item
+                    h3 Naslov: 
+                      a.btn.btn-outline-primary(href="/objava/"+ objava._id) #{objava.naslov} 
+                    div Objavljeno: 
+                      span= objava.datum + ' u ' + objava.vreme
+                else
+                  div Nema objava.
+    else
+      div.card-body
+        h1 Profil korisnika, 
+          a.btn.btn-outline-primary(href='/korisnik/'+title)= title
+      div.list-group.list-group-flush
+        div.list-group-item
+          div.list-group.list-group-flush
+            div.list-group-item
+              h2 Objave korisnika #{korisnik.korisnickoIme}.
+            div.list-group-item
+              ul.list-group.list-group-flush
+                each objava in korisnik.objave
+                  li.list-group-item
+                    h3 Naslov: 
+                      a.btn.btn-outline-primary(href="/objava/"+ objava._id) #{objava.naslov} 
+                    div Objavljeno: 
+                      span= objava.datum + ' u ' + objava.vreme
+                else
+                  div.list-group-item Ovaj korisnik trenutno nema objava.

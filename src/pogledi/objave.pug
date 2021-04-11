@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  div.card
+    div.card-body
+      h1= title
+    ul.list-group.list-group-flush
+      each objava in sveObjave
+        li.list-group-item
+          div.list-group-flush
+            h3 Naslov: 
+              a.btn.btn-outline-primary(href='/objava/'+objava._id) #{objava.naslov}
+            div.list-group-item
+              div
+                div Objavio: 
+                  a.card-link(href="/korisnik/" + objava.objavio) #{objava.objavio} 
+              div
+                span Objavljeno: #{objava.datum} u #{objava.vreme}
+              if objava.objavio === korisnickoIme
+                span.badge.bg-success Moja objava
+      else
+        div.list-group-item Nema ni jedne objave

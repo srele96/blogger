@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST', action='')
+    .mb-3
+      label.form-label(for='korisnickoIme') Korisnicko ime
+        div Potrebno je [#{minKaraktera} - #{maxKaraktera}] karaktera
+      input#korisnickoIme.form-control(type='text' aria-describedby='korisnicko ime' name='korisnickoIme')
+    .mb-3
+      label.form-label(for='sifra') Sifra
+        div Potrebno je [#{minKaraktera} - #{maxKaraktera}] karaktera
+      input#sifra.form-control(type='password' name='sifra')
+    button.btn.btn-primary(type='submit') Uloguj se

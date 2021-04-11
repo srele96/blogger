@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  div.card
+    div.card-body
+      h1= title
+    ul.list-group.list-group-flush
+      each korisnik in sviKorisnici
+        if korisnik.korisnickoIme === korisnickoIme
+          li.list-group-item
+            div.list-group.list-group-flush
+              div
+                span.badge.bg-success Moj profil
+              h2 Korisnik: 
+                a.btn.btn-primary(href='/korisnik/'+korisnik.korisnickoIme) #{korisnik.korisnickoIme}
+              div.list-group-item
+                h3 Moje objave.
+                ul.list-group.list-group-flush
+                  each objava in korisnik.objave
+                    li.list-group-item
+                      h4 Naslov: 
+                        a.btn.btn-outline-primary(href="/objava/"+ objava._id) #{objava.naslov} 
+                      div Objavljeno: 
+                        span= objava.datum + ' u ' + objava.vreme
+                  else
+                    div Ovaj korisnik trenutno nema objava.
+        else
+          li.list-group-item
+            div.list-group.list-group-flush
+              h2 Korisnik: 
+                a.btn.btn-primary(href='/korisnik/'+korisnik.korisnickoIme) #{korisnik.korisnickoIme}
+              div.list-group-item
+                h3 Korisnikove objave
+                ul.list-group.list-group-flush
+                  each objava in korisnik.objave
+                    li.list-group-item
+                      h4 Naslov: 
+                        a.btn.btn-outline-primary(href="/objava/"+ objava._id) #{objava.naslov} 
+                      div Objavljeno: 
+                        span= objava.datum + ' u ' + objava.vreme
+                  else
+                    div.list-group-item Ovaj korisnik trenutno nema objava.
+      else
+        div.list-group-item Nema registrovanih korisnika.
