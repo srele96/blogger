@@ -40,13 +40,15 @@ function obrisi_komentar_post(req, res, next) {
           title: 'Greska',
           poruka: poruka,
           putanja: `/objava/${objavaId}`,
-          linkText: 'Vrati me na objavu'
+          linkText: 'Vrati me na objavu',
+          korisnickoIme: korisnickoIme
         });
       }  else {
         res.render('poruka', {
           title: 'Uspesno smo obrisali vas komentar',
           putanja: `/objava/${objavaId}`,
-          linkText: 'Vrati me na objavu'
+          linkText: 'Vrati me na objavu',
+          korisnickoIme: korisnickoIme
         });
       }
     })
@@ -95,7 +97,8 @@ function obrisi_korisnika_post(req, res, next) {
           title: 'Doslo je do greske, izlogovani ste',
           poruka: 'Nismo uspeli da obriseno vas nalog',
           linkText: 'Log in',
-          putanja: `/login`
+          putanja: `/login`,
+          korisnickoIme: korisnickoIme
         });
       } else {
         // izloguj korisnika
@@ -104,7 +107,8 @@ function obrisi_korisnika_post(req, res, next) {
         res.render('poruka', {
           title: 'Uspesno ste obrisali nalog',
           linkText: 'Pocetna stranica',
-          putanja: '/'
+          putanja: '/',
+          korisnickoIme: korisnickoIme
         });
       }
     })
@@ -156,7 +160,8 @@ function obrisi_objavu_post(req, res, next) {
           title: 'Greska',
           poruka: poruka,
           putanja: `/objava/${objavaId}`,
-          linkText: 'Vrati me na objavu'
+          linkText: 'Vrati me na objavu',
+          korisnickoIme: korisnickoIme
         });
       } else {
         const poruka = 'Uspesno ste obrisali objavu: ' + 
@@ -165,7 +170,8 @@ function obrisi_objavu_post(req, res, next) {
         res.render('poruka', {
           title: poruka,
           putanja: `/korisnik/${korisnickoIme}`,
-          linkText: 'Vrati me na profil'
+          linkText: 'Vrati me na profil',
+          korisnickoIme: korisnickoIme
         })
       }
     })
