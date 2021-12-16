@@ -1,9 +1,10 @@
 {
   "name": "mongo-blog",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Simple blog project using cloud MongoDB with basic CRUD operations.",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "prepare": "husky install"
   },
   "keywords": [
     "blog",
@@ -21,6 +22,13 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "dotenv": "^10.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.2",
+    "nodemon": "^2.0.7",
+    "prettier": "2.5.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { pokreniServer } = require('./src/pokreniServer');
 const blogRuter = require('./src/rute/blog');
 const { ocistiKolacice } = require('./src/middleware/middleware');
@@ -17,15 +18,17 @@ app.use(cookieParser());
 // trideset minuta u milisekundama
 const TRIDESET_MINUTA = 1800000;
 
-app.use(session({
-  key: 'user_sid',
-  secret: 'somerandonstuffs',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    expires: TRIDESET_MINUTA
-  }
-}));
+app.use(
+  session({
+    key: 'user_sid',
+    secret: 'somerandonstuffs',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: TRIDESET_MINUTA
+    }
+  })
+);
 
 app.use(ocistiKolacice);
 
@@ -36,12 +39,12 @@ app.set('view engine', 'pug');
 
 app.use('/', blogRuter);
 
-// nakon svih zahteva, ako nije uspelo obradjivanje zahteva, 
+// nakon svih zahteva, ako nije uspelo obradjivanje zahteva,
 // obavesti korisnika o gresci
 app.use('*', (req, res) => {
-  if(!res.headersSent) {
+  if (!res.headersSent) {
     let korisnickoIme = null;
-    if(req.session.user) korisnickoIme = req.session.user.korisnickoIme;
+    if (req.session.user) korisnickoIme = req.session.user.korisnickoIme;
     res.status(404).render('404', {
       title: 'Doslo je do greske.',
       korisnickoIme: korisnickoIme
