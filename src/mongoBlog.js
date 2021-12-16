@@ -1,19 +1,32 @@
 const MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectId;
 
-// string za konekciju sa lokalnom mongo robo 3t bazom
-const mongodb = 'mongodb://localhost:27017';
+const connectionURI = `mongodb+srv://${process.env.MDB_USERNAME}:${process.env.MDB_PASSWORD}@cluster0.856mj.mongodb.net/testdb?retryWrites=true&w=majority`;
+const klijent = new MongoClient(connectionURI, { useUnifiedTopology: true });
 
-// povezi sa mongo robo 3t bazom
-const klijent = new MongoClient(mongodb, { useUnifiedTopology: true });
-klijent.connect();
+function MongoDB() {
+  this.isConnected = false;
+}
 
-/**
- * Referenca na mongo bazu 'Blog'
- * @constant mongoBlog
- */
-const mongoBlog = klijent.db('Blog');
+MongoDB.prototype.connect = function () {
+  klijent.connect((err, client) => {
+    if (err) console.log(err);
+    else {
+      this.mongoBlog = client.db('Blog');
+      this.isConnected = true;
+    }
+  });
+};
 
-// svaki import ce koristiti referencu na bazu Blog
-module.exports.mongoBlog = mongoBlog;
-module.exports.ObjectId = ObjectId;
+const DB = new MongoDB();
+///////////////////////////////////////////////////////////////////////////////
+// this is asynchronous, but not awaited here, it may take some time to connect
+// if used before connection is established, it will throw an error
+// this case isn't handled anywhere and I don't know if it could be issue
+//
+// 1. after server is ran for first time, if it's not connected, it will throw
+//    an error
+// 2. reconnection isnt handled (in case it never connects)
+///////////////////////////////////////////////////////////////////////////////
+DB.connect();
+
+module.exports.DB = DB;
